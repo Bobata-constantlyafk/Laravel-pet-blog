@@ -8,4 +8,15 @@
     </div>
     <hr>
     <small>Written on {{$post->created_at}}</small>
+    <div>
+      <hr>
+      <a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a>
+      
+      <form method="POST" action="{{ route('posts.destroy', $post->id) }}" accept-charset="UTF-8" id="deleteForm">
+          @method('delete')
+          @csrf
+          <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger float-right">Delete</button>
+      </form>
+    </div>
+
 @endsection
