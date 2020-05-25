@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/services', 'PagesController@services');
 
@@ -25,3 +20,12 @@ Route::resource('posts', 'PostsController');
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
+
+Route::get('/', 'PagesController@index');
+
+Route::get('user/profile', 'UserProfile@index')->name('user.profile');
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
