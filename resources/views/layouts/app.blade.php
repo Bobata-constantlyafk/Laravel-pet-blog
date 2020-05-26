@@ -18,7 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
+
+    @yield('stylesheets')
+
+  </head>
 <body>
     <div id="app">
        @include('inc.navbar')
@@ -30,3 +33,5 @@
     </div>
 </body>
 </html>
+
+@yield('scripts')
