@@ -23,7 +23,11 @@ Route::get('/dashboard', 'DashboardController@index');
 
 Route::get('/', 'PagesController@index');
 
-Route::get('user/profile', 'UserProfile@index')->name('user.profile');
+Route::get('profile', 'UserProfile@profile')->name('profile');
+Route::post('profile', 'UserProfile@update_avatar');
+
+
+
 
 
 // Route::get('/', function () {

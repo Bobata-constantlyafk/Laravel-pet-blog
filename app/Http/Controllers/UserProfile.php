@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
+use Auth;
+use Image;
 
 class UserProfile extends Controller
 {
@@ -23,10 +25,26 @@ class UserProfile extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+
+    public function profile()
     {
-      $user_id = auth()->user()->id;
-      $user = User::find($user_id);
-      return view('user.profile');
+      return view('profile', array('user'=>Auth::user()));
     }
-}
+
+    public function update_avatar(Request $request){
+      if($request->hasFile('avatar'))
+      {
+        $avatar = $request->file('avatar');
+        $filename = time() . '.' . $avatar->getClientOriginalExtension();
+        Image::make($avatar)->resize(170,170)->save( public_path('/uploads/avatars/'  . $filename ));
+
+        $user = Auth::user();
+        $user->avatar=$filename;
+        $user->save();
+      }
+      return view('profile', array('user'=>Auth::user()));
+    }
+
+
+
+  }
