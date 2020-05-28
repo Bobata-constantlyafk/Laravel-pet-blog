@@ -30,6 +30,7 @@ Route::post('profile', 'UserProfile@update_avatar');
 
 
 
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });

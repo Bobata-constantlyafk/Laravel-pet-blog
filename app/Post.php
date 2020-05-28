@@ -14,6 +14,8 @@ class Post extends Model
     //Timestamps
     public $timestamps = true;
 
+    protected $fillable = ['image'];
+
     public function user(){
       return $this->belongsTo('App\User');
     }

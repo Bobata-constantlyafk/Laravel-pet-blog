@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Image;
 
 class PostsController extends Controller
 {
@@ -47,22 +48,48 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $this->validate($request, [
+
+        request()->validate([
           'title' => 'required',
-          'body' => 'required'
+          'body' => 'required',
+  
         ]);
+
 
         //Create post
         $post = new Post;
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
+        $post->title = request()->input('title');
+        $post->body = request()->input('body');
         $post->user_id = auth()->user()->id;
+
+        if(request()->hasFile('image')){
+          request()->validate([
+            'image' => 'file|image|max:5000',
+          ]);
+
+          
+          $image = request()->file('image');
+          $imagep = Image::make($image);
+          $imagep->pixelate(35);
+          
+          $filename = time() . '.' . $image->getClientOriginalExtension();
+          $filenamep=  "p" . $filename;
+
+          Image::make($image)->resize(170,170)->save( public_path('/uploads/pics/'  . $filename ));
+          Image::make($imagep)->resize(170,170)->save( public_path('/uploads/pics/'  . $filenamep));
+          
+          $post->image=$filename;
+          $post->imagep=$filenamep;
+          $post->save();
+        }
+
         $post->save();
 
         return redirect('/posts')->with('success','Post Created');
     }
+    
 
     /**
      * Display the specified resource.
@@ -101,17 +128,31 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-      $this->validate($request, [
+      request()->validate([
         'title' => 'required',
-        'body' => 'required'
+        'body' => 'required',
+
       ]);
 
       //Create post
       $post = Post::find($id);
-      $post->title = $request->input('title');
-      $post->body = $request->input('body');
+      $post->title = request()->input('title');
+      $post->body = request()->input('body');
+
+      if(request()->hasFile('image')){
+        request()->validate([
+          'image' => 'file|image|max:5000',
+        ]);
+        $image = request()->file('image');
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        Image::make($image)->resize(170,170)->save( public_path('/uploads/pics/'  . $filename ));
+
+        $post->image=$filename;
+        $post->save();
+      }
+
       $post->save();
 
       return redirect('/posts')->with('success','Post Updated');

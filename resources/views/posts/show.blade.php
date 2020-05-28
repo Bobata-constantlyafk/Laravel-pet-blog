@@ -1,4 +1,7 @@
+
 @extends('layouts.app')
+
+
 
 @section('content')
     <a href="/posts" class="btn btn-default">Go back</a>
@@ -6,7 +9,19 @@
     <div>
         {{$post->body}}
     </div>
+
+    
+    @if($post->image)
+    <div class="row">
+      <div class="col-12">
+        <img id="hover" src="/uploads/pics/{{$post->image}}" alt="" style="width:170px;height:170px"
+        onmouseover="this.src='/uploads/pics/{{$post->imagep}}'"  onmouseout="this.src='/uploads/pics/{{$post->image}}'" >
+      </div>
+    </div>
+    @endif
+
     <hr>
+
     <small>Written on {{$post->created_at}} by {{$post->user->name}}</small>
     <div>
       <hr>
