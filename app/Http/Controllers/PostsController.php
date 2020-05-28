@@ -57,7 +57,6 @@ class PostsController extends Controller
   
         ]);
 
-
         //Create post
         $post = new Post;
         $post->title = request()->input('title');
@@ -146,9 +145,16 @@ class PostsController extends Controller
           'image' => 'file|image|max:5000',
         ]);
         $image = request()->file('image');
-        $filename = time() . '.' . $image->getClientOriginalExtension();
-        Image::make($image)->resize(170,170)->save( public_path('/uploads/pics/'  . $filename ));
+        $imagep = Image::make($image);
+        $imagep->pixelate(35);
 
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+        $filenamep=  "p" . $filename;
+
+        Image::make($image)->resize(170,170)->save( public_path('/uploads/pics/'  . $filename ));
+        Image::make($imagep)->resize(170,170)->save( public_path('/uploads/pics/'  . $filenamep));
+
+        $post->imagep=$filenamep;
         $post->image=$filename;
         $post->save();
       }
