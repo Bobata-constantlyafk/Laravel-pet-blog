@@ -112,11 +112,15 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
 
+        //Check for admin
+        if(auth()->user()->name == "Admin"){
+          return view('posts.edit')->with('post', $post);
+        }
         //Check for correct user
         if(auth()->user()->id !==$post->user_id){
-            return redirect('/posts')->with('error','Unauthorized page');
+          return redirect('/posts')->with('error','Unauthorized page');
         }
-
+        
         return view('posts.edit')->with('post', $post);
     }
 
@@ -173,6 +177,12 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+
+        //Check for admin
+        if(auth()->user()->name == "Admin"){
+          $post -> delete();
+          return redirect('/posts')->with('success','Post Removed');
+        }
 
         //Check for correct user
         if(auth()->user()->id !==$post->user_id){
