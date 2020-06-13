@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Image;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PostsController extends Controller
 {
@@ -193,4 +194,5 @@ class PostsController extends Controller
         return redirect('/posts')->with('success','Post Removed');
 
     }
+
 }

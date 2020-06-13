@@ -13,8 +13,14 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                        <a href="/posts/create" class="btn btn-primary">Create Post</a>
-                        <h3>Your Blog Posts</h3>
+                    <div class="p-2 row justify-content-center" >
+                        <a href="/posts/create" class="btn btn-primary pr-2">Create Post</a>
+                        <form method="GET" class="pl-2" action="/download">
+                          @csrf
+                          <button type="submit" onclick="return confirm('Are you sure to download?')" class="btn btn-success">Download exl</button>
+                        </form>
+                    </div>
+                        <h5>Your blog posts</h5>
                         @if(count($posts)>0)
                                 <table class="table table-striped">
                                     <tr>
@@ -25,12 +31,14 @@
                                     @foreach($posts as $post)
                                         <tr>
                                             <td>{{$post->title}}</td>
+                                            
                                             <td><a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a></td>
                                             <td><form method="POST" action="{{ route('posts.destroy', $post->id) }}" accept-charset="UTF-8" id="deleteForm">
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit" onclick="return confirm('Are you sure to delete?')" class="btn btn-danger float-right">Delete</button>
-                                                </form></td>
+                                                </form>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </table>
