@@ -67,14 +67,11 @@ class AdDash extends Controller
 
       //Check for admin
       if(auth()->user()->name == "Admin"){
-        return view('addashe')->with('user', $user);
+        return view('pages.addashe')->with('user', $user);
       }
       //Check for correct user
-      if(auth()->user()->id !==$post->user_id){
-        return redirect('/addashe')->with('error','Unauthorized page');
-      }
       
-      return view('addashe')->with('user', $user);
+      return view('pages.addashe')->with('user', $user);
     }
 
     /**
@@ -86,7 +83,34 @@ class AdDash extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      request()->validate([
+        'name' => 'required',
+        'email' => 'required',
+
+      ]);
+
+      //Create post
+      $user = User::find($id);
+      $user->name = request()->input('name');
+      $user->email = request()->input('email');
+
+      if(request()->hasFile('image')){
+        request()->validate([
+          'image' => 'file|image|max:5000',
+        ]);
+        $image = request()->file('image');
+
+        $filename = time() . '.' . $image->getClientOriginalExtension();
+
+        Image::make($image)->resize(170,170)->save( public_path('/uploads/avatars/'  . $filename ));
+
+        $user->avatar=$filename;
+        $user->save();
+      }
+
+      $user->save();
+
+      return redirect('/addash')->with('success','User Updated');
     }
 
     /**
@@ -105,11 +129,6 @@ class AdDash extends Controller
         return redirect('/addash')->with('success','Post Removed');
       }
 
-      //Check for correct user
-      if(auth()->user()->id !==$post->user_id){
-          return redirect('/addash')->with('error','Unauthorized page');
-      }
-      
       $user -> delete();
       return redirect('/addash')->with('success','Post Removed');
     }

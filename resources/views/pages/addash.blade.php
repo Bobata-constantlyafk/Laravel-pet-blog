@@ -24,7 +24,7 @@
                           @foreach($users as $user)
                           <tr>
                             <td>{{$user->name}}</td>
-                            <td><a href="/posts/{{$user->id}}/edit" class="btn btn-default">Edit</a></td>
+                            <td><a href="/addash/{{$user->id}}/edit" class="btn btn-default">Edit</a></td>
                                             <td><form method="POST" action="{{ route('addash.destroy', $user->id) }}" accept-charset="UTF-8" id="deleteForm">
                                                     @method('delete')
                                                     @csrf
