@@ -21,7 +21,7 @@
               <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/services">Services</a>
+              <a class="nav-link" href="/dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/posts">Blog</a>
@@ -58,9 +58,10 @@
                               {{ __('Logout') }}
                           </a>
 
-                             <a class="dropdown-item" href="/dashboard">Dashboard</a>
-
+                             
+                             @if(auth()->user()->role_id == "1")
                              <a class="dropdown-item" href="/addash">Admin dashboard</a>
+                             @endif
 
                           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                               @csrf

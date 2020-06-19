@@ -111,7 +111,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         //Check for admin
-        if(auth()->user()->name == "Admin"){
+        if(auth()->user()->role_id == "1"){
           return view('posts.edit')->with('post', $post);
         }
         //Check for correct user
@@ -177,7 +177,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         //Check for admin
-        if(auth()->user()->name == "Admin"){
+        if(auth()->user()->role_id == "1"){
           $post -> delete();
           return redirect('/posts')->with('success','Post Removed');
         }
