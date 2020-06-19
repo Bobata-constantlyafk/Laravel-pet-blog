@@ -152,9 +152,11 @@ class PostsController extends Controller
 
         $filename = time() . '.' . $image->getClientOriginalExtension();
         $filenamep=  "p" . $filename;
+        $waterMarkUrl = public_path('uploads/avatars/watermark.png');
 
-        Image::make($image)->resize(170,170)->save( public_path('/uploads/pics/'  . $filename ));
-        Image::make($imagep)->resize(170,170)->save( public_path('/uploads/pics/'  . $filenamep));
+        Image::make($image)->resize(170,170)->insert($waterMarkUrl, 'bottom-left', 1, 1)->save( public_path('/uploads/pics/'  . $filename ));
+        Image::make($imagep)->resize(170,170)->insert($waterMarkUrl, 'bottom-left', 1, 1)->save( public_path('/uploads/pics/'  . $filenamep));
+        
 
         $post->imagep=$filenamep;
         $post->image=$filename;
