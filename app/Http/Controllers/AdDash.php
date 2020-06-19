@@ -63,7 +63,18 @@ class AdDash extends Controller
      */
     public function edit($id)
     {
-        //
+      $user = User::find($id);
+
+      //Check for admin
+      if(auth()->user()->name == "Admin"){
+        return view('addashe')->with('user', $user);
+      }
+      //Check for correct user
+      if(auth()->user()->id !==$post->user_id){
+        return redirect('/addashe')->with('error','Unauthorized page');
+      }
+      
+      return view('addashe')->with('user', $user);
     }
 
     /**
@@ -100,6 +111,6 @@ class AdDash extends Controller
       }
       
       $user -> delete();
-      return redirect('/posaddashts')->with('success','Post Removed');
+      return redirect('/addash')->with('success','Post Removed');
     }
 }

@@ -24,7 +24,6 @@
                                     @foreach($posts as $post)
                                         <tr>
                                             <td>{{$post->title}}</td>
-                                            
                                             <td><a href="/posts/{{$post->id}}/edit" class="btn btn-default">Edit</a></td>
                                             <td><form method="POST" action="{{ route('posts.destroy', $post->id) }}" accept-charset="UTF-8" id="deleteForm">
                                                     @method('delete')
