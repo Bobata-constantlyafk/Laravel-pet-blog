@@ -45,6 +45,11 @@ class UserProfile extends Controller
       return view('profile', array('user'=>Auth::user()));
     }
 
+    public function getDashboard()
+    {
+        $users = User::all();
 
+        return view('dashboard', compact('users'));
+    }
 
   }

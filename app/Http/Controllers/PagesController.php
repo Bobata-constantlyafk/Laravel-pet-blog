@@ -16,6 +16,11 @@ class PagesController extends Controller
       return view('pages.about')->with('title',$title);
     }
 
+    public function addash(){
+      $title = 'Adashcho';
+      return view('pages.addash')->with('title',$title);
+    }
+
     public function services(){
       $data = array(
         'title' => 'Services',

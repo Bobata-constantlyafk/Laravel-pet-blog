@@ -25,6 +25,7 @@ Route::resource('posts', 'PostsController');
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
+Route::resource('addash', 'AdDash');
 
 Route::get('profile', 'UserProfile@profile')->name('profile');
 Route::post('profile', 'UserProfile@update_avatar');

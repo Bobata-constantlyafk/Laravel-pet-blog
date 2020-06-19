@@ -13,14 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <div class="p-2 row justify-content-center" >
-                        <a href="/posts/create" class="btn btn-primary pr-2">Create Post</a>
-                        <form method="GET" class="pl-2" action="/download">
-                          @csrf
-                          <button type="submit" onclick="return confirm('Are you sure to download?')" class="btn btn-success">Download exl</button>
-                        </form>
-                    </div>
-                        <h5>Your blog posts</h5>
+                        <h5 class="p-3 row justify-content-center">Your blog posts</h5>
                         @if(count($posts)>0)
                                 <table class="table table-striped">
                                     <tr>
@@ -46,6 +39,7 @@
                             <p>You have no posts</p>
                         @endif
                   </div>
+                  <a href="/posts/create" class="float-right btn btn-primary pr-2">Create Post</a>
             </div>
         </div>
     </div>

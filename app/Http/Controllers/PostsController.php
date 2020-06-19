@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use Image;
-use Barryvdh\DomPDF\Facade as PDF;
+use App\User;
 
 class PostsController extends Controller
 {
@@ -26,9 +26,6 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //$posts = Post::all();
-        //$posts = Post::orderBy('title','desc')->get();
-
         $posts = Post::orderBy('created_at','desc')->paginate(3);
         return view('posts.index')->with('posts', $posts);
     }
