@@ -19,6 +19,9 @@ The website is a pet blog, where pet owners can make different threads and talk 
 
 The website is finished and has all of the basic functionalities from every week.
 
+There is a a table called role_id in the users table, if its set to 1, the user will have administrator rights.
+Which means that he will have acess to the Users dashboard. 
+He will also see all posts from all users in the regular dashboard and he will have the abillity to edit and delete them.
 
 
 
