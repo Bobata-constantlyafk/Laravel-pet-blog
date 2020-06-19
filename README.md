@@ -17,7 +17,7 @@ This is Martin Kirilov's and Boyan Dechev's project.
 
 The website is a pet blog, where pet owners can make different threads and talk about their pets.
 
-Currently we're working on adding and Image to the threads.
+The website is finished and has all of the basic functionalities from every week.
 
 
 
