@@ -18,9 +18,10 @@ class AdDash extends Controller
      */
     public function index()
     {
-     
+      if(auth()->user()->role_id == "1"){
         $users = User::all();
         return view('pages.addash')->with('users', $users);
+      }
     }
 
     /**
@@ -66,7 +67,7 @@ class AdDash extends Controller
       $user = User::find($id);
 
       //Check for admin
-      if(auth()->user()->name == "Admin"){
+      if(auth()->user()->role_id == "1"){
         return view('pages.addashe')->with('user', $user);
       }
       //Check for correct user
@@ -124,7 +125,7 @@ class AdDash extends Controller
       $user = User::find($id);
 
       //Check for admin
-      if(auth()->user()->name == "Admin"){
+      if(auth()->user()->role_id == "1"){
         $user -> delete();
         return redirect('/addash')->with('success','Post Removed');
       }

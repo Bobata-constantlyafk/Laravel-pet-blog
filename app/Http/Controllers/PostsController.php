@@ -66,7 +66,7 @@ class PostsController extends Controller
             'image' => 'file|image|max:5000',
           ]);
 
-          
+         
           $image = request()->file('image');
           $imagep = Image::make($image);
           $imagep->pixelate(35);
@@ -74,8 +74,12 @@ class PostsController extends Controller
           $filename = time() . '.' . $image->getClientOriginalExtension();
           $filenamep=  "p" . $filename;
 
-          Image::make($image)->resize(170,170)->save( public_path('/uploads/pics/'  . $filename ));
-          Image::make($imagep)->resize(170,170)->save( public_path('/uploads/pics/'  . $filenamep));
+          $waterMarkUrl = public_path('uploads/avatars/watermark.png');
+
+          Image::make($image)->resize(170,170)->insert($waterMarkUrl, 'bottom-left', 1, 1)->save( public_path('/uploads/pics/'  . $filename ));
+
+          Image::make($imagep)->resize(170,170)->insert($waterMarkUrl, 'bottom-left', 1, 1)->save( public_path('/uploads/pics/'  . $filenamep));
+
           
           $post->image=$filename;
           $post->imagep=$filenamep;
@@ -111,7 +115,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         //Check for admin
-        if(auth()->user()->name == "Admin"){
+        if(auth()->user()->role_id == "1"){
           return view('posts.edit')->with('post', $post);
         }
         //Check for correct user
@@ -179,7 +183,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         //Check for admin
-        if(auth()->user()->name == "Admin"){
+        if(auth()->user()->role_id == "1"){
           $post -> delete();
           return redirect('/posts')->with('success','Post Removed');
         }

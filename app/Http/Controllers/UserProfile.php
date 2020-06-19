@@ -39,8 +39,6 @@ class UserProfile extends Controller
         $filename = time() . '.' . $avatar->getClientOriginalExtension();
         Image::make($avatar)->resize(170,170)->save( public_path('/uploads/avatars/'  . $filename ));
 
-        //$avatar->insert(public_path('/uploads/avatars/watermark.png', 'bottom-left'));
-
         $user = Auth::user();
         $user->avatar=$filename;
         $user->save();
